@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixelated Love - Typing Animation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Press Start 2P', monospace;
+        }
+        
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 3px solid #ff1493;
+        }
+        
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        #typeText {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 48px;
+            fill: #ff1493;
+            letter-spacing: 2px;
+        }
+        
+        .cursor {
+            fill: #ff1493;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <svg width="600" height="150" viewBox="0 0 600 150" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+                </style>
+            </defs>
+            <text id="typeText" x="30" y="80"></text>
+            <rect class="cursor" id="cursor" x="30" y="50" width="4" height="40" />
+        </svg>
+    </div>
+
+    <script>
+        const text = 'I love you';
+        const typeText = document.getElementById('typeText');
+        const cursor = document.getElementById('cursor');
+        let i = 0;
+        
+        function type() {
+            if (i <= text.length) {
+                typeText.textContent = text.slice(0, i);
+                // Update cursor position
+                cursor.setAttribute('x', 30 + (i * 20));
+                i++;
+                setTimeout(type, 150);
+            } else {
+                // Keep cursor blinking after typing is done
+                cursor.style.animation = 'blink 1s infinite';
+            }
+        }
+        
+        // Start typing when page loads
+        setTimeout(type, 500);
+    </script>
+</body>
+</html>
