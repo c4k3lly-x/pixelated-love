@@ -3,79 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I Love You</title>
+    <title>I Love You - Pixelated Typing</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            width: 100vw;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            font-family: 'Press Start 2P', cursive;
-            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Press Start 2P', monospace;
         }
 
-        .box {
-            background: rgba(0, 0, 0, 0.95);
+        .container {
+            background: rgba(0, 0, 0, 0.9);
             border: 5px solid #ff1493;
-            padding: 50px 70px;
-            border-radius: 20px;
-            box-shadow: 0 0 50px rgba(255, 20, 147, 0.6);
+            padding: 60px 80px;
+            border-radius: 15px;
+            box-shadow: 0 0 60px rgba(255, 20, 147, 0.7);
             text-align: center;
         }
 
-        #text {
+        #typing-text {
             font-size: 64px;
             color: #ff1493;
-            letter-spacing: 6px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 400px;
-        }
-
-        .blink {
+            letter-spacing: 8px;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            min-height: 90px;
             display: inline-block;
-            width: 6px;
-            height: 64px;
-            background: #ff1493;
-            margin-left: 10px;
-            animation: blink-animation 0.6s infinite;
         }
 
-        @keyframes blink-animation {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
+        #cursor {
+            display: inline-block;
+            width: 8px;
+            height: 64px;
+            background-color: #ff1493;
+            margin-left: 8px;
+            vertical-align: text-bottom;
+            animation: blink 0.7s steps(2) infinite;
+        }
+
+        #cursor.hidden {
+            display: none;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="box">
-        <div id="text"></div>
+    <div class="container">
+        <span id="typing-text"></span><span id="cursor"></span>
     </div>
 
     <script>
-        const phrase = "I love you";
-        const textDiv = document.getElementById('text');
-        let index = 0;
+        document.addEventListener('DOMContentLoaded', function() {
+            const text = 'I love you';
+            const typingText = document.getElementById('typing-text');
+            const cursor = document.getElementById('cursor');
+            let charIndex = 0;
 
-        function type() {
-            if (index < phrase.length) {
-                const char = phrase.charAt(index);
-                textDiv.innerHTML += char === ' ' ? '&nbsp;' : char;
-                index++;
-                setTimeout(type, 300);
-            } else {
-                textDiv.innerHTML += '<span class="blink"></span>';
+            function typeCharacter() {
+                if (charIndex < text.length) {
+                    typingText.textContent += text[charIndex];
+                    charIndex++;
+                    setTimeout(typeCharacter, 250);
+                } else {
+                    cursor.classList.add('hidden');
+                }
             }
-        }
 
-        type();
+            typeCharacter();
+        });
     </script>
 </body>
 </html>
